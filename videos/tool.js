@@ -35,7 +35,7 @@
         const token = encodeBase64Unicode(JSON.stringify(data));
 
         const player =
-            `https://cdn.newssolor.com/image/inc/player.html?url=${encodeURIComponent(token)}`;
+            `https://cdn.newssolor.com/image/inc/mp4.html?url=${encodeURIComponent(token)}`;
 
         const iframe =
 `<h3 style="text-align: left;"><b>Watch the video below:</b></h3>
