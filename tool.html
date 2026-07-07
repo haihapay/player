@@ -1,82 +1,84 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Video Tool Clean</title>
+(() => {
+    "use strict";
 
-<link rel="stylesheet" href="/css/style.css">
+    const mp4 = document.getElementById("mp4");
+    const img = document.getElementById("img");
+    const output = document.getElementById("output");
 
-<style>
+    const btnGen = document.getElementById("btnGen");
+    const btnCopy = document.getElementById("btnCopy");
+    const btnReset = document.getElementById("btnReset");
 
-.result-row{
-    display:flex;
-    gap:10px;
-    margin-top:15px;
-}
+    function encodeBase64Unicode(str) {
+        return btoa(unescape(encodeURIComponent(str)));
+    }
 
-.result-row input{
-    flex:1;
-}
+    btnGen.addEventListener("click", () => {
 
-@media(max-width:768px){
+        const video = mp4.value.trim();
+        const poster = img.value.trim();
 
-.result-row{
-    flex-direction:column;
-}
+        if (!video) {
+            alert("Please enter MP4 Video URL.");
+            mp4.focus();
+            return;
+        }
 
-.result-row button{
-    width:100%;
-}
+        const data = {
+            u: video
+        };
 
-}
+        if (poster) {
+            data.img = poster;
+        }
 
-</style>
+        const token = encodeBase64Unicode(JSON.stringify(data));
 
-</head>
+        const player =
+            `${location.origin}/player?url=${encodeURIComponent(token)}`;
 
-<body class="tool-page">
+        const iframe =
+`<h3 style="text-align: left;"><b>Watch the video below:</b></h3>
+<div class="player-wrapper"><iframe
+src="${player}" width="100%" height="500" frameborder="0" allowfullscreen allow="autoplay; fullscreen; picture-in-picture"> </iframe></div>`;
 
-<div class="box">
+        output.value = iframe;
 
-<h2>🎬 Video Tool (Clean)</h2>
+    });
 
-<input id="mp4" placeholder="MP4 URL">
+    btnCopy.addEventListener("click", async () => {
 
-<input id="img" placeholder="Poster URL (optional)">
+        if (!output.value) {
+            alert("Nothing to copy.");
+            return;
+        }
 
-<div style="margin:15px 0;">
+        try {
 
-<button id="btnGen">Generate</button>
+            await navigator.clipboard.writeText(output.value);
 
-<button id="btnCopy">Copy Embed</button>
+            alert("Copied.");
 
-<button id="btnReset">Reset</button>
+        } catch (e) {
 
-</div>
+            output.select();
 
-<textarea
-id="output"
-rows="12"
-readonly
-placeholder="Embed Code"></textarea>
+            document.execCommand("copy");
 
-<div class="result-row">
+  //          alert("Copied.");
 
-<input
-id="resultLink"
-readonly
-placeholder="Generated Player Link">
+        }
 
-<button id="btnCopyLink">
-Copy Link
-</button>
+    });
 
-</div>
+    btnReset.addEventListener("click", () => {
 
-</div>
+        mp4.value = "";
+        img.value = "";
+        output.value = "";
 
-<script src="/videos/tool.js"></script>
+        mp4.focus();
 
-</body>
-</html>
+    });
+
+})();
