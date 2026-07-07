@@ -1,15 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Video Player Generator</title>
+<title>Video Tool Clean</title>
 
 <link rel="stylesheet" href="/css/style.css">
+
+<style>
+
+.result-row{
+    display:flex;
+    gap:10px;
+    margin-top:15px;
+}
+
+.result-row input{
+    flex:1;
+}
+
+@media(max-width:768px){
+
+.result-row{
+    flex-direction:column;
+}
+
+.result-row button{
+    width:100%;
+}
+
+}
+
+</style>
 
 </head>
 
@@ -17,82 +39,44 @@
 
 <div class="box">
 
-    <h2>🎬 Video Player Generator</h2>
+<h2>🎬 Video Tool (Clean)</h2>
 
-    <div class="form-group">
+<input id="mp4" placeholder="MP4 URL">
 
-        <label for="mp4">
-            MP4 Video URL
-        </label>
+<input id="img" placeholder="Poster URL (optional)">
 
-        <input
-            id="mp4"
-            type="text"
-            placeholder="https://example.com/video.mp4">
+<div style="margin:15px 0;">
 
-    </div>
+<button id="btnGen">Generate</button>
 
-    <div class="form-group">
+<button id="btnCopy">Copy Embed</button>
 
-        <label for="img">
-            Poster Image URL (Optional)
-        </label>
+<button id="btnReset">Reset</button>
 
-        <input
-            id="img"
-            type="text"
-            placeholder="https://example.com/poster.jpg">
+</div>
 
-    </div>
+<textarea
+id="output"
+rows="12"
+readonly
+placeholder="Embed Code"></textarea>
 
-    <div class="buttons">
+<div class="result-row">
 
-        <button
-            id="btnGen"
-            class="gen">
+<input
+id="resultLink"
+readonly
+placeholder="Generated Player Link">
 
-            Generate
+<button id="btnCopyLink">
+Copy Link
+</button>
 
-        </button>
-
-        <button
-            id="btnCopy"
-            class="copy">
-
-            Copy
-
-        </button>
-
-        <button
-            id="btnReset"
-            class="reset">
-
-            Reset
-
-        </button>
-
-    </div>
-
-    <div class="result">
-
-        <label for="output">
-
-            Embed Code
-
-        </label>
-
-        <textarea
-            id="output"
-            readonly
-            spellcheck="false"
-            placeholder="Generated iframe code will appear here..."></textarea>
-
-    </div>
+</div>
 
 </div>
 
 <script src="/videos/tool.js"></script>
 
 </body>
-
 </html>
